@@ -1,0 +1,14 @@
+E:\ETEC\2DS\DS\Aula03Colecoes\obj\Debug\net9.0\Aula03Colecoes.GeneratedMSBuildEditorConfig.editorconfig
+E:\ETEC\2DS\DS\Aula03Colecoes\obj\Debug\net9.0\Aula03Colecoes.AssemblyInfoInputs.cache
+E:\ETEC\2DS\DS\Aula03Colecoes\obj\Debug\net9.0\Aula03Colecoes.AssemblyInfo.cs
+E:\ETEC\2DS\DS\Aula03Colecoes\obj\Debug\net9.0\Aula03Colecoes.csproj.CoreCompileInputs.cache
+E:\ETEC\2DS\DS\Aula03Colecoes\bin\Debug\net9.0\Aula03Colecoes.exe
+E:\ETEC\2DS\DS\Aula03Colecoes\bin\Debug\net9.0\Aula03Colecoes.deps.json
+E:\ETEC\2DS\DS\Aula03Colecoes\bin\Debug\net9.0\Aula03Colecoes.runtimeconfig.json
+E:\ETEC\2DS\DS\Aula03Colecoes\bin\Debug\net9.0\Aula03Colecoes.dll
+E:\ETEC\2DS\DS\Aula03Colecoes\bin\Debug\net9.0\Aula03Colecoes.pdb
+E:\ETEC\2DS\DS\Aula03Colecoes\obj\Debug\net9.0\Aula03Colecoes.dll
+E:\ETEC\2DS\DS\Aula03Colecoes\obj\Debug\net9.0\refint\Aula03Colecoes.dll
+E:\ETEC\2DS\DS\Aula03Colecoes\obj\Debug\net9.0\Aula03Colecoes.pdb
+E:\ETEC\2DS\DS\Aula03Colecoes\obj\Debug\net9.0\Aula03Colecoes.genruntimeconfig.cache
+E:\ETEC\2DS\DS\Aula03Colecoes\obj\Debug\net9.0\ref\Aula03Colecoes.dll
