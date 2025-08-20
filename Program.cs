@@ -10,9 +10,13 @@ namespace MyApp
         static void Main(string[] args)
         {
             CriarLista();
-            ExibirLista();
+            ObterPorId();
         }
 
+        public static void ObterPorId(){
+            lista = lista.FindAll(x => x.Id == 2);
+            ExibirLista();            
+        }
         public static void CriarLista()
         {
             Funcionario f1 = new Funcionario();

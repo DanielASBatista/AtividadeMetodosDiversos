@@ -12,3 +12,4 @@ E:\ETEC\2DS\DS\Aula03Colecoes\obj\Debug\net9.0\refint\Aula03Colecoes.dll
 E:\ETEC\2DS\DS\Aula03Colecoes\obj\Debug\net9.0\Aula03Colecoes.pdb
 E:\ETEC\2DS\DS\Aula03Colecoes\obj\Debug\net9.0\Aula03Colecoes.genruntimeconfig.cache
 E:\ETEC\2DS\DS\Aula03Colecoes\obj\Debug\net9.0\ref\Aula03Colecoes.dll
+E:\ETEC\2DS\DS\Aula03Colecoes\obj\Debug\net9.0\Aula03Colecoes.sourcelink.json
