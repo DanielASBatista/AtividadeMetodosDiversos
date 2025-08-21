@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO.Pipes;
 using Aula03Colecoes.Models;
 using Aula03Colecoes.Models.Enuns;
 
@@ -9,10 +10,61 @@ namespace MyApp
         static List<Funcionario> lista = new List<Funcionario>();
         static void Main(string[] args)
         {
-            CriarLista();
-            ObterPorId();
+            //CriarLista();
+            //ObterPorId();
+            //ObterPorIdDigitado();
+            //AdicionarFuncionario();
+            //ObterPorSalario();
         }
 
+        public static void AdicionarFuncionario(){
+            Funcionario f = new Funcionario();
+
+            Console.WriteLine("Digite o nome: ");
+            f.Nome = Console.ReadLine();
+            Console.WriteLine("Digite o salário: ");
+            f.Salario = decimal.Parse(Console.ReadLine());
+            Console.WriteLine("Digite o CPF: ");
+            f.CPF = Console.ReadLine();
+            Console.WriteLine("Digite a data de admissão: ");
+            f.DataAdmissao = DateTime.Parse(Console.ReadLine());
+            Console.WriteLine("insira o tipo de contrato:\n1.CLT\n2.Aprendiz");
+            f.TipoFuncionario = (TipoFuncionarioEnum)decimal.Parse(Console.ReadLine()); 
+
+            if (string.IsNullOrEmpty(f.Nome)){
+                Console.WriteLine("O nome deve ser preenchido");
+                return;
+            }
+
+            else if (f.Salario == 0){
+                Console.WriteLine("Valor do salário não pode ser 0");
+                return;
+            }
+
+            else{
+                lista.Add(f);
+                ExibirLista();
+            }
+}
+        public static void ObterPorIdDigitado(){
+            Console.WriteLine("Digite o Id: ");
+            int id = int.Parse(Console.ReadLine());
+            Funcionario fbusca = lista.Find(x => x.Id == id);
+
+            if (fbusca == null){
+                Console.WriteLine("Não encontrado");
+            }
+            else
+                Console.WriteLine($"Funcionario encontrado: {fbusca.Nome}");
+        }
+
+        public static void ObterPorSalario(){
+            Console.WriteLine("Digite o valor minimo");
+            decimal Salario = decimal.Parse(Console.ReadLine());
+            lista = lista.FindAll(x => x.Salario == Salario);
+            ExibirLista();
+
+        }
         public static void ObterPorId(){
             lista = lista.FindAll(x => x.Id == 2);
             ExibirLista();            
