@@ -10,14 +10,62 @@ namespace MyApp
         static List<Funcionario> lista = new List<Funcionario>();
         static void Main(string[] args)
         {
-            //CriarLista();
+            CriarLista();
             //ObterPorId();
             //ObterPorIdDigitado();
             //AdicionarFuncionario();
             //ObterPorSalario();
+            ExemplosListasColecoes();
         }
 
-        public static void AdicionarFuncionario(){
+        public static void ExemplosListasColecoes()
+        {
+            Console.WriteLine("==================================================");
+            Console.WriteLine("****** Exemplos - Aula 03 Listas e Coleções ******");
+            Console.WriteLine("==================================================");
+            CriarLista();
+            int opcaoEscolhida = 0;
+            do
+            {
+                Console.WriteLine("==================================================");
+                Console.WriteLine("---Digite o número referente a opção desejada: ---");
+                Console.WriteLine("1 - Obter Por Id");
+                Console.WriteLine("2 - Adicionar funcionario");
+                Console.WriteLine("3 - Obter por Id digitado");
+                Console.WriteLine("4 - Obter por Salario digitado");
+                Console.WriteLine("==================================================");
+                Console.WriteLine("-----Ou tecle qualquer outro número para sair-----");
+                Console.WriteLine("==================================================");
+            
+                opcaoEscolhida = int.Parse(Console.ReadLine());
+                string mensagem = string.Empty;
+                switch (opcaoEscolhida)
+                {
+                case 1:
+                    ObterPorId();
+                break;
+
+                case 2:
+                    AdicionarFuncionarioV2();
+                break;
+
+                case 3:
+                    ObterPorIdDigitado();
+                break;
+
+                case 4:
+                    ObterPorSalario();
+                break;
+                default:
+                Console.WriteLine("Saindo do sistema....");
+                break;
+            }
+        } while (opcaoEscolhida >= 1 && opcaoEscolhida <= 10);
+            Console.WriteLine("==================================================");
+            Console.WriteLine("* Obrigado por utilizar o sistema e volte sempre *");
+            Console.WriteLine("==================================================");
+} 
+        public static void AdicionarFuncionarioV2(){
             Funcionario f = new Funcionario();
 
             Console.WriteLine("Digite o nome: ");
