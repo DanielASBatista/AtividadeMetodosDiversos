@@ -23,14 +23,14 @@ namespace MyApp
             do
             {
                 Console.WriteLine("\n==================================================");
-                Console.WriteLine("---Digite o número referente a opção desejada: ---");
-                Console.WriteLine("1 - Obter Por Id");
-                Console.WriteLine("2 - Adicionar funcionario");
-                Console.WriteLine("3 - Obter por Id digitado");
-                Console.WriteLine("4 - Obter por Salario digitado");
+                Console.WriteLine("---Digite o número referente à opção desejada: ---");
+                Console.WriteLine("1 - Obter por nome");
+                Console.WriteLine("2 - Obter funcionarios recentes");
+                Console.WriteLine("3 - Obter estatisticas");
+                Console.WriteLine("4 - Cadastro de novo funcionário");
                 Console.WriteLine("5 - Obter por nome");
-                Console.WriteLine("6 - Obter Funcionarios Recentes");
-                Console.WriteLine("7 - Obter Estatisticas");
+                Console.WriteLine("6 - ");
+                Console.WriteLine("7 - ");
                 Console.WriteLine("8 - Validar Salario Admissao");
                 Console.WriteLine("==================================================");
                 Console.WriteLine("-----Ou tecle qualquer outro número para sair-----");
@@ -41,19 +41,19 @@ namespace MyApp
                 switch (opcaoEscolhida)
                 {
                     case 1:
-                        ObterPorId();
+                        ObterPorNome();
                         break;
 
                     case 2:
-                        AdicionarFuncionarioV2();
+                        ObterFuncionariosRecentes();
                         break;
 
                     case 3:
-                        ObterPorIdDigitado();
+                        ObterEstatisticas();
                         break;
 
                     case 4:
-                        ObterPorSalario();
+                        AdicionarFuncionarioV2();
                         break;
                     case 5:
                         ObterPorNome();
@@ -88,7 +88,7 @@ namespace MyApp
 
             if (filtrados.Count == 0)
             {
-                Console.WriteLine("Funcionário não encontrado.");
+                Console.WriteLine("Funcionário não encontrado, por favor digite o nome de um funcionário já cadastrado.");
             }
             else
             {
@@ -139,31 +139,46 @@ namespace MyApp
         public static void AdicionarFuncionarioV2()
         {
             Funcionario f = new Funcionario();
+            do
+            {
+                Console.Write("Digite o nome: ");
+                f.Nome = Console.ReadLine();
+                if (string.IsNullOrWhiteSpace(f.Nome))
+                {
+                Console.WriteLine("O nome deve ser preenchido.");
+                }
+            } while (string.IsNullOrWhiteSpace(f.Nome));
+            decimal salario;
+            do
+            {
+                Console.Write("Digite o salário: ");
+                string entrada = Console.ReadLine();
+                if (string.IsNullOrWhiteSpace(entrada))
+                {
+                    Console.WriteLine("O salário não pode ser vazio.");
+                    continue;
+                }
+                if (!decimal.TryParse(entrada, out salario))
+                {
+                    Console.WriteLine("O valor digitado não é um número válido.");
+                    continue;
+                }
+                if (salario <= 0)
+                {
+                    Console.WriteLine("O salário deve ser maior que 0.");
+                    continue;
+                }
+                f.Salario = salario;
+                break;
+            } while (true);
+            
 
-            Console.WriteLine("Digite o nome: ");
-            f.Nome = Console.ReadLine();
-            Console.WriteLine("Digite o salário: ");
-            f.Salario = decimal.Parse(Console.ReadLine());
             Console.WriteLine("Digite o CPF: ");
             f.CPF = Console.ReadLine();
             Console.WriteLine("Digite a data de admissão: ");
             f.DataAdmissao = DateTime.Parse(Console.ReadLine());
             Console.WriteLine("insira o tipo de contrato:\n1.CLT\n2.Aprendiz");
             f.TipoFuncionario = (TipoFuncionarioEnum)decimal.Parse(Console.ReadLine());
-
-            if (string.IsNullOrEmpty(f.Nome))
-            {
-                Console.WriteLine("O nome deve ser preenchido");
-                return;
-            }
-
-            else if (f.Salario == 0)
-            {
-                Console.WriteLine("Valor do salário não pode ser 0");
-                return;
-            }
-
-            else
             {
                 lista.Add(f);
                 ExibirLista();
