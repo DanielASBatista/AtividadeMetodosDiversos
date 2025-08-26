@@ -1,9 +1,10 @@
-﻿using System;
-using System.IO.Pipes;
+﻿//Daniel Alves RM:251376
+//Hernan Rodrigo RM:251169
+
 using Aula03Colecoes.Models;
 using Aula03Colecoes.Models.Enuns;
 
-namespace MyApp
+namespace MenuSeletorDeMetodos
 {
     internal class Program
     {
@@ -28,10 +29,8 @@ namespace MyApp
                 Console.WriteLine("2 - Obter funcionarios recentes");
                 Console.WriteLine("3 - Obter estatisticas");
                 Console.WriteLine("4 - Cadastro de novo funcionário");
-                Console.WriteLine("5 - Obter por nome");
-                Console.WriteLine("6 - ");
-                Console.WriteLine("7 - ");
-                Console.WriteLine("8 - Validar Salario Admissao");
+                Console.WriteLine("5 - Cadastro com validação de nome");
+                Console.WriteLine("6 - Obter por tipo de contratação");
                 Console.WriteLine("==================================================");
                 Console.WriteLine("-----Ou tecle qualquer outro número para sair-----");
                 Console.WriteLine("==================================================");
@@ -56,65 +55,45 @@ namespace MyApp
                         AdicionarFuncionarioV2();
                         break;
                     case 5:
-                        ObterPorNome();
+                        ValidarNome();
                         break;
                     case 6:
-                        ObterFuncionariosRecentes();
-                        break;
-                    case 7:
-                        ObterEstatisticas();
-                        break;
-                    case 8:
-                        ValidarSalarioAdmissao();
+                        ObterPorTipo();
                         break;
                     default:
                         Console.WriteLine("Saindo do sistema....");
                         break;
                 }
-            } while (opcaoEscolhida >= 1 && opcaoEscolhida <= 10);
+            } while (opcaoEscolhida >= 1 && opcaoEscolhida <= 6);
             Console.WriteLine("==================================================");
             Console.WriteLine("* Obrigado por utilizar o sistema e volte sempre *");
             Console.WriteLine("==================================================");
         }
 
         //Método com nome ObterPorNome que selecione um funcionário de acordo com o nome digitado e que
-        //caso não encontre retorne uma mensagem para o usuário.
+        //caso não encontre retorne uma mensagem para o usuário. Ele reconhece entradas parciais e não diferencia maiúsculas de minúsculas.
         public static void ObterPorNome()
         {
-            Console.WriteLine("Digite o nome do funcionario ");
-            String nome = Console.ReadLine();
-            List<Funcionario> filtrados = lista.Where(f => f.Nome.Equals(nome, StringComparison.OrdinalIgnoreCase))
+            Console.WriteLine("Digite o nome do funcionário: ");
+            string nome = Console.ReadLine();
+
+            List<Funcionario> filtrados = lista
+            .Where(f => f.Nome.Contains(nome, StringComparison.OrdinalIgnoreCase))
             .ToList();
 
-            if (filtrados.Count == 0)
-            {
-                Console.WriteLine("Funcionário não encontrado, por favor digite o nome de um funcionário já cadastrado.");
-            }
-            else
-            {
-                lista = filtrados;
-                ExibirLista();
-                CriarLista();
-            }
+        if (filtrados.Count == 0)
+        {
+            Console.WriteLine("Funcionário não encontrado. Por favor, digite um nome já cadastrado (ou parte dele).");
         }
-        // d) ValidarSalarioAdmissao
-        public static void ValidarSalarioAdmissao(){
-            for (int i = 0; i < lista.Count; i++){
-                if (lista[i].Salario <= 0)
-                {
-                    Console.WriteLine($"Erro: o funcionário {lista[i].Nome} tem salário inválido (0 ou negativo).");
-                    lista.RemoveAt(i);
-                    i--; // ajusta índice depois de remover
-                }
-                else if (lista[i].DataAdmissao < DateTime.Now.Date)
-                {
-                    Console.WriteLine($"Erro: o funcionário {lista[i].Nome} tem data de admissão inválida ({lista[i].DataAdmissao:dd/MM/yyyy}).");
-                    lista.RemoveAt(i);
-                    i--;
-                }
-    }
-}
-
+        else
+        {
+            lista = filtrados;
+            ExibirLista();
+            CriarLista();
+        }
+        }
+        //Método com nome ObterFuncionariosRecentes que selecione todos os funcionários com Id maior ou igual a 4 e ordene por salário decrescente.
+        //Caso não encontre retorne uma mensagem para o usuário.
         public static void ObterFuncionariosRecentes()
         {
             List<Funcionario> filtrados = lista.Where(f => f.Id >= 4).OrderByDescending(f => f.Salario).ToList();
@@ -136,6 +115,13 @@ namespace MyApp
             Console.WriteLine($"A quantidade de funcionarios é: {lista.Count} funcionarios");
             Console.WriteLine($"Somatório dos salários: R$ {lista.Sum(f => f.Salario):c}");
         }
+
+        //Método com nome AdicionarFuncionarioV2 que adicione um novo funcionário na lista, porém com as seguintes validações:
+        //Nome não pode ser vazio ou nulo.
+        //Salário deve ser maior que 0.
+        //Data de admissão não pode ser uma data passada.
+        //Caso alguma das validações falhe, deve ser exibida uma mensagem para o usuário e o funcionário não deve ser adicionado.
+        //Caso todas as validações passem, o funcionário deve ser adicionado e a lista exibida.        
         public static void AdicionarFuncionarioV2()
         {
             Funcionario f = new Funcionario();
@@ -145,7 +131,7 @@ namespace MyApp
                 f.Nome = Console.ReadLine();
                 if (string.IsNullOrWhiteSpace(f.Nome))
                 {
-                Console.WriteLine("O nome deve ser preenchido.");
+                    Console.WriteLine("O nome deve ser preenchido.");
                 }
             } while (string.IsNullOrWhiteSpace(f.Nome));
             decimal salario;
@@ -171,12 +157,32 @@ namespace MyApp
                 f.Salario = salario;
                 break;
             } while (true);
-            
 
             Console.WriteLine("Digite o CPF: ");
             f.CPF = Console.ReadLine();
-            Console.WriteLine("Digite a data de admissão: ");
-            f.DataAdmissao = DateTime.Parse(Console.ReadLine());
+
+            do
+            {
+                Console.WriteLine("Digite a data de admissão: ");
+                string entrada = Console.ReadLine();
+
+            if (!DateTime.TryParse(entrada, out DateTime dataAdmissao))
+            {
+                Console.WriteLine("Entrada inválida! Digite a data no formato correto (ex: dd/MM/aaaa).");
+                continue; 
+            }
+
+            if (dataAdmissao < DateTime.Now)
+            {
+                Console.WriteLine("Data de admissão inválida, não é possível contratar no passado.");
+                continue;
+            }
+
+            f.DataAdmissao = dataAdmissao; 
+            break;
+
+            } while (true);
+
             Console.WriteLine("insira o tipo de contrato:\n1.CLT\n2.Aprendiz");
             f.TipoFuncionario = (TipoFuncionarioEnum)decimal.Parse(Console.ReadLine());
             {
@@ -184,28 +190,58 @@ namespace MyApp
                 ExibirLista();
             }
         }
-        public static void ObterPorIdDigitado(){
-            Console.WriteLine("Digite o Id: ");
-            int id = int.Parse(Console.ReadLine());
-            Funcionario fbusca = lista.Find(x => x.Id == id);
+        //Método com nome ValidarNome que valide se o nome do funcionário possui pelo menos dois caracteres.
+        //Caso o nome seja inválido, deve ser exibida uma mensagem para o usuário e o nome não deve ser atribuído ao funcionário.
+        //Caso o nome seja válido, o nome deve ser atribuído ao funcionário e uma mensagem de sucesso exibida.
+        public static void ValidarNome()
+        {
+            Funcionario f = new Funcionario();
 
-            if (fbusca == null){
-                Console.WriteLine("Não encontrado");
+            do
+            {
+                Console.Write("Digite o nome: ");
+                string nome2C = Console.ReadLine();
+
+                if (nome2C.Length < 2)
+                {
+                    Console.WriteLine("O nome deve ter pelo menos dois caracteres.");
+                    continue;
+                }
+                else Console.WriteLine($"Nome {nome2C} válido.");
+
+
+                f.Nome = nome2C;
+                break;
+            } while (true);
+        }
+        //Método com nome ObterPorTipo que selecione os funcionários de acordo com o tipo de contratação (CLT ou Aprendiz) digitado pelo usuário.
+        //Caso não encontre retorne uma mensagem para o usuário.    
+
+        public static void ObterPorTipo()
+        {
+            Console.WriteLine("Digite o tipo de contratação (1 para CLT, 2 para Aprendiz): ");
+            string entrada = Console.ReadLine();
+
+            if (!int.TryParse(entrada, out int tipoInt) || (tipoInt != 1 && tipoInt != 2))
+            {
+                Console.WriteLine("Tipo de contratação inválido. Por favor, digite 1 para CLT ou 2 para Aprendiz.");
+                return;
+            }
+
+            TipoFuncionarioEnum tipoSelecionado = (TipoFuncionarioEnum)tipoInt;
+
+            List<Funcionario> filtrados = lista.Where(f => f.TipoFuncionario == tipoSelecionado).ToList();
+
+            if (filtrados.Count == 0)
+            {
+                Console.WriteLine("Nenhum funcionário encontrado para o tipo de contratação selecionado.");
             }
             else
-                Console.WriteLine($"Funcionario encontrado: {fbusca.Nome}");
-        }
-
-        public static void ObterPorSalario(){
-            Console.WriteLine("Digite o valor minimo");
-            decimal Salario = decimal.Parse(Console.ReadLine());
-            lista = lista.FindAll(x => x.Salario == Salario);
-            ExibirLista();
-
-        }
-        public static void ObterPorId(){
-            lista = lista.FindAll(x => x.Id == 2);
-            ExibirLista();            
+            {
+                lista = filtrados;
+                ExibirLista();
+                CriarLista();
+            }
         }
         public static void CriarLista()
         {
