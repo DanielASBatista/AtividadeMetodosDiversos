@@ -172,7 +172,7 @@ namespace MenuSeletorDeMetodos
                 continue; 
             }
 
-            if (dataAdmissao < DateTime.Now)
+            if (dataAdmissao < DateTime.Today)
             {
                 Console.WriteLine("Data de admissão inválida, não é possível contratar no passado.");
                 continue;
