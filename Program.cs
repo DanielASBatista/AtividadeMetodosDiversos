@@ -1,5 +1,5 @@
-﻿//Daniel Alves RM:251376
-//Hernan Rodrigo RM:251169
+﻿//Daniel Alves - RM:251376
+//Hernan Rodrigo - RM:251169
 
 using Aula03Colecoes.Models;
 using Aula03Colecoes.Models.Enuns;
@@ -11,10 +11,10 @@ namespace MenuSeletorDeMetodos
         static List<Funcionario> lista = new List<Funcionario>();
         static void Main(string[] args)
         {
-            ExemplosListasColecoes();
+            FuncaoSeletoraDeMetodos();
         }
 
-        public static void ExemplosListasColecoes()
+        public static void FuncaoSeletoraDeMetodos()
         {
             Console.WriteLine("==================================================");
             Console.WriteLine("****** Exemplos - Aula 03 Listas e Coleções ******");
